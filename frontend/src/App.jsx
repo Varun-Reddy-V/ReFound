@@ -1,4 +1,4 @@
-
+import Login from "./Login";
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import "./App.css";
@@ -17,6 +17,10 @@ const categories = [
 ];
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(null);
+  if (!currentUser) {
+    return <Login onLogin={setCurrentUser} />;
+  }
   const [showReportForm, setShowReportForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [reportMessage, setReportMessage] = useState("");
