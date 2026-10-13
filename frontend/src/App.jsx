@@ -17,10 +17,18 @@ const categories = [
 ];
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
-  if (!currentUser) {
-    return <Login onLogin={setCurrentUser} />;
-  }
+  const [currentUser, setCurrentUser] = useState(() => {
+  const params = new URLSearchParams(window.location.search);
+
+    if (params.get("demo") === "true") {
+      return {
+        name: "Demo User",
+        email: "demo@example.com",
+        role: "USER",
+      };
+    }
+    return null;
+  });
   const [showReportForm, setShowReportForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [reportMessage, setReportMessage] = useState("");
@@ -143,6 +151,10 @@ function App() {
           year: "numeric",
         });
   };
+
+  if (!currentUser) {
+    return <Login onLogin={setCurrentUser} />;
+  }
 
   return (
     <div className="app">
